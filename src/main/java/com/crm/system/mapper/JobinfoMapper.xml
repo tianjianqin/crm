@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.system.mapper.JobinfoMapper">
+    <resultMap id="BaseResultMap" type="com.crm.system.domain.Jobinfo">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="job" jdbcType="CHAR" property="job"/>
+        <result column="departmentId" jdbcType="INTEGER" property="departmentid"/>
+        <result column="remarks" jdbcType="CHAR" property="remarks"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, job, departmentId,remarks
+    </sql>
+    <select id="selectByExample" parameterType="com.crm.system.domain.JobinfoExample" resultMap="BaseResultMap">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from jobinfo
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from jobinfo
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from jobinfo
+        where id = #{id,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByExample" parameterType="com.crm.system.domain.JobinfoExample">
+        delete from jobinfo
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.crm.system.domain.Jobinfo">
+        insert into jobinfo (id, job, departmentId
+        )
+        values (#{id,jdbcType=INTEGER}, #{job,jdbcType=CHAR}, #{departmentid,jdbcType=INTEGER}
+        )
+    </insert>
+    <insert id="insertSelective" parameterType="com.crm.system.domain.Jobinfo">
+        insert into jobinfo
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="job != null">
+                job,
+            </if>
+            <if test="departmentid != null">
+                departmentId,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="job != null">
+                #{job,jdbcType=CHAR},
+            </if>
+            <if test="departmentid != null">
+                #{departmentid,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.crm.system.domain.JobinfoExample" resultType="java.lang.Long">
+        select count(*) from jobinfo
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update jobinfo
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=INTEGER},
+            </if>
+            <if test="record.job != null">
+                job = #{record.job,jdbcType=CHAR},
+            </if>
+            <if test="record.departmentid != null">
+                departmentId = #{record.departmentid,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update jobinfo
+        set id = #{record.id,jdbcType=INTEGER},
+        job = #{record.job,jdbcType=CHAR},
+        departmentId = #{record.departmentid,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.crm.system.domain.Jobinfo">
+        update jobinfo
+        <set>
+            <if test="job != null">
+                job = #{job,jdbcType=CHAR},
+            </if>
+            <if test="departmentid != null">
+                departmentId = #{departmentid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.crm.system.domain.Jobinfo">
+        update jobinfo
+        set job = #{job,jdbcType=CHAR},
+        departmentId = #{departmentid,jdbcType=INTEGER}
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="queryList" resultType="com.crm.system.domain.Jobinfo">
+        SELECT
+        j.id as "id",j.job as "job",j.departmentId as "departmentId",d.dname as "dname",j.remarks as "remarks"
+        FROM jobinfo j
+        LEFT JOIN department d ON d.id=j.departmentId
+        <where>
+            <if test="departmentId != null and departmentId.trim() != ''">
+                and departmentId = #{departmentId}
+            </if>
+            <if test="job != null and job.trim() != ''">
+                and job like CONCAT('%', #{job}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id asc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from jobinfo
+        <where>
+            <if test="job != null and job.trim() != ''">
+                and job like CONCAT('%', #{job}, '%')
+            </if>
+        </where>
+    </select>
+
+    <insert id="save" parameterType="com.crm.system.domain.Jobinfo" useGeneratedKeys="true" keyProperty="id">
+        insert into jobinfo (id, job, departmentId,remarks
+        )
+        values (#{id,jdbcType=INTEGER}, #{job,jdbcType=CHAR}, #{departmentid,jdbcType=INTEGER },#{remarks}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.crm.system.domain.Jobinfo">
+        update jobinfo
+        <set>
+            <if test="job != null">
+                job = #{job,jdbcType=CHAR},
+            </if>
+            <if test="departmentid != null">
+                departmentId = #{departmentid,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <delete id="delete">
+        delete from jobinfo where id = #{value}
+    </delete>
+</mapper>

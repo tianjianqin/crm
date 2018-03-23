@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>用户中心</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../layui/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+    <blockquote class="layui-elem-quote quoteBox">
+        <form class="layui-form">
+            <div class="layui-inline">
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input searchVal" placeholder="真实姓名" />
+                </div>
+                <a class="layui-btn search_btn" data-type="reload">搜索</a>
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-normal distribute_sale"><i class="layui-icon">&#xe62e;</i>分配客户给销售</a>
+                </div>
+                <div class="layui-inline">
+                    <a class="layui-btn layui-btn-normal distribute_consult"><i class="layui-icon">&#xe62e;</i>分配客户给咨询</a>
+                </div>
+            </div>
+        </form>
+    </blockquote>
+    <table id="userList" lay-filter="userList"></table>
+
+</form>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../layui/distribute_sale.js"></script>
+</body>
+</html>

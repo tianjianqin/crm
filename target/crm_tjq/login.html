@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>登录</title>
+    <link href="statics/css/layer.css" rel="stylesheet" type="text/css">
+    <link href="statics/css/font-awesome.min.css" rel="stylesheet">
+    <link href="statics/css/login.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/layer.js"></script>
+    <script type="text/javascript" src="js/jquery.tscookie.js"></script>
+    <script type="text/javascript" src="js/jquery.validation.min.js"></script>
+    <script type="text/javascript" src="js/jquery.supersized.min.js"></script>
+    <script type="text/javascript" src="js/jquery.progressBar.js"></script>
+    <script type="text/javascript" src="js/login.js"></script>
+
+</head>
+<body>
+<!--v3-v12-->
+<div class="login-layout">
+    <div class="top">
+        <h5><em></em></h5>
+        <h2>CRM客户关系管理系统</h2>
+    </div>
+    <form method="post" id="form_login">
+        <div class="lock-holder">
+            <div class="form-group pull-left input-username">
+                <label>账号</label>
+                <input name="username" id="admin_name" autocomplete="off" type="text" placeholder="输入用户名" class="input-text" value=""
+                       tabindex='1' required title="请输入登陆账号">
+            </div>
+            <i class="fa fa-ellipsis-h dot-left"></i>
+            <i class="fa fa-ellipsis-h dot-right"></i>
+            <div class="form-group pull-right input-password-box">
+                <label>密码</label>
+                <input name="password" id="admin_password" class="input-text" autocomplete="off" placeholder="输入密码" tabindex='2'
+                       type="password" required pattern="[\S]{6}[\S]*" title="密码不少于6个字符">
+            </div>
+        </div>
+        <div class="avatar"><img src="statics/images/admin.png" alt=""></div>
+        <div class="submit">
+            <span>
+            <div class="code">
+            <div class="arrow"></div>
+            <div class="code-img">
+            <img src="captcha.jpg" name="codeimage" id="codeimage" onclick="verifyimage()" border="0"/>
+            </div>
+            <a href="JavaScript:void(0);" id="hide" class="close" title="关闭"><i></i></a>
+            <a href="JavaScript:void(0);" onclick="verifyimage()" class="change" title="看不清,点击更换验证码"><i></i></a>
+            </div>
+            <input name="captcha" type="text" required class="input-code" tabindex='3' id="captcha" placeholder="输入验证码" pattern="[A-z0-9]{5}" title="验证码为5个字符" autocomplete="off" value="" >
+            </span>
+            <span>
+              <input name="" class="input-button btn-submit" type="button" value="登录">
+            </span>
+        </div>
+        <div class="submit2"></div>
+    </form>
+    <div class="bottom">
+    </div>
+</div>
+</body>
+</html>

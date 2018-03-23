@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crm.custom.mapper.CustomMapper">
+    <resultMap id="BaseResultMap" type="com.crm.custom.domain.Custom">
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="CHAR" property="name"/>
+        <result column="education" jdbcType="CHAR" property="education"/>
+        <result column="phoneNo" jdbcType="CHAR" property="phoneno"/>
+        <result column="qq" jdbcType="INTEGER" property="qq"/>
+        <result column="email" jdbcType="CHAR" property="email"/>
+        <result column="customStatu" jdbcType="CHAR" property="customstatu"/>
+        <result column="createDate" jdbcType="DATE" property="createdate"/>
+        <result column="inviteName" jdbcType="CHAR" property="invitename"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" prefixOverrides="and" suffix=")">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+        id, name, education, phoneNo, qq, email, customStatu, createDate, inviteName
+    </sql>
+
+
+    <select id="queryByNameAndPhone" resultType="com.crm.custom.domain.Custom">
+        select * from custom where name = #{name} and phoneNo = #{phoneno}
+    </select>
+
+    <select id="queryList" resultType="com.crm.custom.domain.Custom">
+        SELECT *
+        FROM custom
+        <where>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="customstatu != null">
+                customStatu = #{customstatu}
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(id) from custom
+        <where>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.crm.custom.domain.Custom">
+        update custom
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=CHAR},
+            </if>
+            <if test="education != null">
+                education = #{education,jdbcType=CHAR},
+            </if>
+            <if test="phoneno != null">
+                phoneNo = #{phoneno,jdbcType=CHAR},
+            </if>
+            <if test="qq != null">
+                qq = #{qq,jdbcType=INTEGER},
+            </if>
+            <if test="email != null">
+                email = #{email,jdbcType=CHAR},
+            </if>
+            <if test="customstatu != null">
+                customStatu = #{customstatu,jdbcType=CHAR},
+            </if>
+            <if test="createdate != null">
+                createDate = #{createdate,jdbcType=DATE},
+            </if>
+            <if test="invitename != null">
+                inviteName = #{invitename,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <!--<update id="updateBatch" parameterType="com.crm.custom.domain.Custom">-->
+        <!--update custom-->
+        <!--set  customStatu=#{customstatu,jdbcType=CHAR}-->
+        <!--where id in-->
+        <!--<foreach collection="list" index="index" item="customList"-->
+                 <!--separator="," open="(" close=")">-->
+            <!--#{customList.id,jdbcType=BIGINT}-->
+        <!--</foreach>-->
+    <!--</update>-->
+
+    <insert id="save" parameterType="com.crm.custom.domain.Custom">
+        insert into custom (id, name, education,
+                            phoneNo, qq, email, customStatu,
+                            createDate, inviteName)
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=CHAR}, #{education,jdbcType=CHAR},
+                #{phoneno,jdbcType=CHAR}, #{qq,jdbcType=INTEGER}, #{email,jdbcType=CHAR}, #{customstatu,jdbcType=CHAR},
+                #{createdate}, #{invitename,jdbcType=CHAR})
+    </insert>
+
+    <delete id="delete">
+        delete from custom where id = #{value}
+    </delete>
+</mapper>
