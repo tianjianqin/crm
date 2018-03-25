@@ -54,6 +54,17 @@ public class EmployeeController {
         return data;
     }
 
+    @RequestMapping("/departmentEmployeeList")
+    public Result departmentEmployeeList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        query.put("departmentid",employee.getDepartmentid());
+        List<Employee> employeeList = employeeService.queryList(query);
+        int total = employeeService.queryTotal(query);
+        Result data = Result.ok().put("data", employeeList).put("count",total);
+        return data;
+    }
+
     @RequestMapping("/saleList")
     public Result saleList(@RequestParam Map<String, Object> params) {
         Query query = new Query(params);

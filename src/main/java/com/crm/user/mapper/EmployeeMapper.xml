@@ -104,6 +104,9 @@
             <if test="jobinfoid != null">
                 and `jobInfoId` = #{jobinfoid}
             </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
             <if test="realname != null and realname.trim() != ''">
                 and realname like CONCAT('%', #{realname}, '%')
             </if>
@@ -128,6 +131,9 @@
         <where>
             <if test="jobinfoid != null">
                 and `jobInfoId` = #{jobinfoid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
             </if>
             <if test="realname != null and realname.trim() != ''">
                 and realname like CONCAT('%', #{realname}, '%')

@@ -88,6 +88,9 @@
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
+            <if test="invitename != null and invitename.trim() != ''">
+                and inviteName = #{invitename}
+            </if>
             <if test="customstatu != null">
                 customStatu = #{customstatu}
             </if>
@@ -110,6 +113,9 @@
         <where>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
+            </if>
+            <if test="invitename != null and invitename.trim() != ''">
+                and inviteName = #{invitename}
             </if>
         </where>
     </select>
