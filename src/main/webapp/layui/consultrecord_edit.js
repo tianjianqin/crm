@@ -4,33 +4,14 @@ layui.use(['laydate','form','layer'],function(){
     var layer = parent.layer === undefined ? layui.layer : top.layer,
         laydate = layui.laydate;
 
-    laydate.render({
-        elem: '.lastfollowdate',
-        format: 'yyyy-MM-dd HH:mm:ss',
-        type: 'datetime',
-        trigger: 'click',
-        done: function(value, date){
-        }
-    });
-    laydate.render({
-        elem: '.plandate',
-        format: 'yyyy-MM-dd HH:mm:ss',
-        type: 'datetime',
-        trigger: 'click',
-        done: function(value, date){
-        }
-    });
-
-    form.on("submit(editCustominfo)",function(data) {
+    form.on("submit(editConsultrecord)",function(data) {
         //弹出loading
         var index = top.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
-        $.post("/custominfo/update", {
+        $.post("/consultrecord/update", {
             id:$(".id").val(),
             customid:$(".customid").val(),
-            statu: data.field.statu,  //客户状态
-            lastfollowdate:$(".lastfollowdate").val(),
-            plandate: $(".plandate").val(),
-            mark: $(".mark").val()
+            consultstatu: data.field.consultstatu,  //客户状态
+            result: $(".result").val()
         }, function (res) {
 
         })

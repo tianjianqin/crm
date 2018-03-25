@@ -40,7 +40,6 @@ layui.use(['form','layer','table','util','laytpl'],function(){
             {field: 'lastfollowdate', title: '最近联系日期',align:'center',minWidth:100},
             {field: 'plandate', title: '计划联系日期',align:'center',minWidth:100},
             {field: 'mark', title: '备注',  align:'center',minWidth:100},
-            {title: '操作', minWidth:100, templet:'#custominfoListBar',align:"center",fixed:"right",width:120}
         ]]
     });
 
@@ -60,48 +59,5 @@ layui.use(['form','layer','table','util','laytpl'],function(){
         }
     });
 
-
-    //编辑客户开发信息
-    function editCustominfo(edit){
-        var index = layui.layer.open({
-            title : "修改客户开发信息",
-            type : 2,
-            content : "custominfo_edit.html",
-            success : function(layero, index){
-                var body = layui.layer.getChildFrame('body', index);
-                if(edit){
-                    body.find(".id").val(edit.id);  //ID
-                    body.find(".customid").val(edit.customid);
-                    body.find(".name").val(edit.name);  //名字
-                    body.find(".followman").val(edit.followman);
-                    body.find(".statu input[value="+edit.statu+"]").prop("checked","checked");  //状态
-                    body.find(".startdate").val(edit.startdate);
-                    body.find(".lastfollowdate").val(edit.lastfollowdate);
-                    body.find(".plandate").val(edit.plandate);
-                    body.find(".mark").val(edit.mark);    //备注
-                    form.render("select");
-                }
-                setTimeout(function(){
-                    layui.layer.tips('点击此处返回用户列表', '.layui-layer-setwin .layui-layer-close', {
-                        tips: 3
-                    });
-                },500)
-            }
-        })
-        layui.layer.full(index);
-        //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
-        $(window).on("resize",function(){
-            layui.layer.full(index);
-        })
-    }
-
-    //列表操作
-    table.on('tool(custominfoList)', function(obj){
-        var layEvent = obj.event,
-            data = obj.data;
-        if(layEvent === 'edit'){ //编辑
-            editCustominfo(data);
-        }
-    });
 })
 

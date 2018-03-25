@@ -35,6 +35,16 @@ public class CustominfoServiceImpl implements CustominfoService {
         return custominfoMapper.queryTotal(map);
     }
 
+    public void update(Custominfo custominfo) {
+        if("4".equals(custominfo.getStatu())){
+            Custom custom = new Custom();
+            custom.setId(custominfo.getCustomid());
+            custom.setCustomstatu(custominfo.getStatu());
+            customMapper.update(custom);
+        }
+        custominfoMapper.update(custominfo);
+    }
+
     @Override
     public void saveOrUpdate(List<Custom> customList, List<Custominfo> custominfoList) {
         for(Custom c:customList){

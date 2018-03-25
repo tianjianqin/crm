@@ -1,15 +1,19 @@
 package com.crm.custom.controller;
 
+import com.crm.base.utils.Query;
 import com.crm.base.utils.Result;
 import com.crm.custom.domain.Consultrecord;
 import com.crm.custom.domain.Custom;
 import com.crm.custom.mapper.ConsultrecordMapper;
 import com.crm.custom.service.ConsultrecordService;
 import com.crm.custom.service.CustomService;
+import com.crm.user.domain.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.*;
 
 /**
@@ -24,6 +28,34 @@ public class ConsultrecordController {
     private CustomService customService;
     @Autowired
     private ConsultrecordService consultrecordService;
+
+
+    /**
+     * 客户咨询列表
+     * @param params
+     * @param session
+     * @return
+     */
+    @RequestMapping("/list")
+    public Result list(@RequestParam Map<String, Object> params, HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        query.put("consultmanid",employee.getId());
+        List<Consultrecord> consultrecordList = consultrecordService.queryList(query);
+        int total = consultrecordService.queryTotal(query);
+        Result data = Result.ok().put("data", consultrecordList).put("count",total);
+        return data;
+    }
+
+    /**
+     * 修改客户开发信息
+     * @return
+     */
+    @RequestMapping("/update")
+    public Result update(Consultrecord consultrecord){
+        consultrecordService.update(consultrecord);
+        return Result.ok();
+    }
 
     /**
      * 分配客户

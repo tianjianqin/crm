@@ -1,5 +1,6 @@
 package com.crm.custom.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.crm.base.utils.Query;
 import com.crm.base.utils.Result;
 import com.crm.custom.domain.Custom;
@@ -29,6 +30,12 @@ public class CustominfoController {
     private CustominfoService custominfoService;
 
 
+    /**
+     * 客户开发列表
+     * @param params
+     * @param session
+     * @return
+     */
     @RequestMapping("/list")
     public Result list(@RequestParam Map<String, Object> params,HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -40,6 +47,15 @@ public class CustominfoController {
         return data;
     }
 
+    /**
+     * 修改客户开发信息
+     * @return
+     */
+    @RequestMapping("/update")
+    public Result update(Custominfo custominfo){
+        custominfoService.update(custominfo);
+        return Result.ok();
+    }
     /**
      * 分配客户
      */

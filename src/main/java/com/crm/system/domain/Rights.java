@@ -1,8 +1,9 @@
 package com.crm.system.domain;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class Rights {
+public class Rights implements Serializable{
     private Integer rid;
 
     private String name;

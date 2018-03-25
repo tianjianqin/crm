@@ -83,4 +83,68 @@
             #{consultrecord.consultstatu}, #{consultrecord.consultdate}, #{consultrecord.result})
         </foreach>
     </insert>
+
+    <select id="queryList" resultType="com.crm.custom.domain.Consultrecord">
+        SELECT r.id AS id,r.customId AS customId,c.`name` AS NAME,r.consultManId AS consultManId,
+        e.realname AS consultman,r.consultstatu AS consultstatu,r.consultDate AS consultDate,r.result AS result
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(DISTINCT r.id)
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <update id="update" parameterType="com.crm.custom.domain.Consultrecord">
+        update consultrecord
+        <set>
+            <if test="customid != null">
+                customId = #{customid,jdbcType=INTEGER},
+            </if>
+            <if test="consultmanid != null">
+                consultManId = #{consultmanid,jdbcType=INTEGER},
+            </if>
+            <if test="consultstatu != null">
+                consultStatu = #{consultstatu,jdbcType=CHAR},
+            </if>
+            <if test="consultdate != null">
+                consultDate = #{consultdate},
+            </if>
+            <if test="result != null">
+                result = #{result,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
 </mapper>

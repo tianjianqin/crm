@@ -18,6 +18,6 @@ public interface CustominfoService {
 
     int queryTotal(Map<String, Object> map);
 
-//    void update(Custom custom);
+    void update(Custominfo custominfo);
 
 }

@@ -1,5 +1,8 @@
 package com.crm.custom.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Consultrecord {
@@ -7,7 +10,7 @@ public class Consultrecord {
 
     private Integer customid;
 
-    private String customname;
+    private String name;
 
     private Integer consultmanid;
 
@@ -15,16 +18,18 @@ public class Consultrecord {
 
     private String consultstatu;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date consultdate;
 
     private String result;
 
-    public String getCustomname() {
-        return customname;
+    public String getName() {
+        return name;
     }
 
-    public void setCustomname(String customname) {
-        this.customname = customname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getConsultman() {

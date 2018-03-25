@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tianjianqin
@@ -30,5 +31,23 @@ public class ConsultrecordServiceImpl implements ConsultrecordService{
             customMapper.update(c);
         }
         consultrecordMapper.saveBatch(consultrecordList);
+    }
+
+    public List<Consultrecord> queryList(Map<String, Object> map) {
+        return consultrecordMapper.queryList(map);
+    }
+
+    public int queryTotal(Map<String, Object> map) {
+        return consultrecordMapper.queryTotal(map);
+    }
+
+    public void update(Consultrecord consultrecord) {
+        if("3".equals(consultrecord.getConsultstatu())){
+            Custom custom = new Custom();
+            custom.setId(consultrecord.getCustomid());
+            custom.setCustomstatu("4");
+            customMapper.update(custom);
+        }
+        consultrecordMapper.update(consultrecord);
     }
 }

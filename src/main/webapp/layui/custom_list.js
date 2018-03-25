@@ -6,40 +6,6 @@ layui.use(['form','layer','table','laytpl'],function(){
     laytpl = layui.laytpl,
         table = layui.table;
 
-    //时间戳的处理
-    layui.laytpl.toDateString = function(d, format){
-        var date = new Date(d || new Date())
-            ,ymd = [
-            this.digit(date.getFullYear(), 4)
-            ,this.digit(date.getMonth() + 1)
-            ,this.digit(date.getDate())
-        ]
-            ,hms = [
-            this.digit(date.getHours())
-            ,this.digit(date.getMinutes())
-            ,this.digit(date.getSeconds())
-        ];
-
-        format = format || 'yyyy-MM-dd HH:mm:ss';
-
-        return format.replace(/yyyy/g, ymd[0])
-            .replace(/MM/g, ymd[1])
-            .replace(/dd/g, ymd[2])
-            .replace(/HH/g, hms[0])
-            .replace(/mm/g, hms[1])
-            .replace(/ss/g, hms[2]);
-    };
-//数字前置补零
-    layui.laytpl.digit = function(num, length, end){
-        var str = '';
-        num = String(num);
-        length = length || 2;
-        for(var i = num.length; i < length; i++){
-            str += '0';
-        }
-        return num < Math.pow(10, length) ? str + (num|0) : num;
-    };
-
     //用户列表
     var tableIns = table.render({
         elem: '#customList',
@@ -75,7 +41,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                     return '<span class="layui-btn-xs layui-btn layui-btn-warm">已报名</span>'
                 }
             }},
-            {field: 'createdate', title: '创建日期',align:'center',minWidth:100,templet: '<div>{{layui.laytpl.toDateString(d.createdate)}}</div>'},
+            {field: 'createdate', title: '创建日期',align:'center',minWidth:100},
             {field: 'invitename', title: '邀请人姓名',  align:'center',minWidth:100},
             {title: '操作', minWidth:175, templet:'#customListBar',align:"center",fixed:"right",width:150}
         ]]

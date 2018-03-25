@@ -128,4 +128,32 @@
         </where>
     </select>
 
+    <update id="update" parameterType="com.crm.custom.domain.Custominfo">
+        update custominfo
+        <set>
+            <if test="customid != null">
+                customId = #{customid,jdbcType=INTEGER},
+            </if>
+            <if test="followmanid != null">
+                followManId = #{followmanid,jdbcType=INTEGER},
+            </if>
+            <if test="statu != null">
+                statu = #{statu,jdbcType=CHAR},
+            </if>
+            <if test="startdate != null">
+                startDate = #{startdate},
+            </if>
+            <if test="lastfollowdate != null">
+                lastFollowDate = #{lastfollowdate},
+            </if>
+            <if test="plandate != null">
+                planDate = #{plandate},
+            </if>
+            <if test="mark != null and mark !=''">
+                mark = #{mark,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
 </mapper>
