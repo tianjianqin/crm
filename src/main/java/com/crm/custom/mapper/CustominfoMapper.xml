@@ -96,6 +96,9 @@
             <if test="followmanid != null">
                 and followManId = #{followmanid}
             </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
@@ -121,6 +124,9 @@
         <where>
             <if test="followmanid != null">
                 and followManId = #{followmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
             </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')

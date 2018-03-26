@@ -47,6 +47,17 @@ public class CustominfoController {
         return data;
     }
 
+    @RequestMapping("/allList")
+    public Result allList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        query.put("departmentid",employee.getDepartmentid());
+        List<Custominfo> custominfoList = custominfoService.queryList(query);
+        int total = custominfoService.queryTotal(query);
+        Result data = Result.ok().put("data", custominfoList).put("count",total);
+        return data;
+    }
+
     /**
      * 修改客户开发信息
      * @return
