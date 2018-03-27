@@ -23,8 +23,8 @@
     <div id="nowTime">亲爱的${sessionScope.employee.realname},<span id="welcome"></span></div>
 </blockquote>
 <div class="layui-row layui-col-space10 panel_box">
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-        <a href="javascript:;" data-url="http://fly.layui.com/case/u/3198216" target="_blank">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;" data-url="https://github.com/tianjianqin/crm" target="_blank">
             <div class="panel_icon layui-bg-green">
                 <i class="layui-anim seraph icon-good"></i>
             </div>
@@ -34,29 +34,18 @@
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-        <a href="javascript:;" data-url="https://github.com/BrotherMa/layuicms2.0" target="_blank">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+        <a href="javascript:;" data-url="https://github.com/tianjianqin/crm" target="_blank">
             <div class="panel_icon layui-bg-black">
                 <i class="layui-anim seraph icon-github"></i>
             </div>
             <div class="panel_word">
                 <span>Github</span>
-                <cite>模版下载链接</cite>
+                <cite>下载链接</cite>
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-        <a href="javascript:;" data-url="https://gitee.com/layuicms/layuicms2.0" target="_blank">
-            <div class="panel_icon layui-bg-red">
-                <i class="layui-anim seraph icon-oschina"></i>
-            </div>
-            <div class="panel_word">
-                <span>码云</span>
-                <cite>模版下载链接</cite>
-            </div>
-        </a>
-    </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="javascript:;">
             <div class="panel_icon layui-bg-orange">
                 <i class="layui-anim seraph icon-icon10" data-icon="icon-icon10"></i>
@@ -68,19 +57,7 @@
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
-        <a href="javascript:;" data-url="page/systemSetting/icons.html">
-            <div class="panel_icon layui-bg-cyan">
-                <i class="layui-anim layui-icon" data-icon=""></i>
-            </div>
-            <div class="panel_word outIcons">
-                <span>34</span>
-                <em>外部图标</em>
-                <cite class="layui-hide">图标管理</cite>
-            </div>
-        </a>
-    </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
         <a href="javascript:;">
             <div class="panel_icon layui-bg-blue">
                 <i class="layui-anim seraph icon-clock"></i>
