@@ -6,6 +6,7 @@ import com.crm.custom.domain.CustominfoExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CustominfoMapper extends BaseRepository<Custominfo>{
     long countByExample(CustominfoExample example);
@@ -29,5 +30,13 @@ public interface CustominfoMapper extends BaseRepository<Custominfo>{
     int updateByPrimaryKeySelective(Custominfo record);
 
     int updateByPrimaryKey(Custominfo record);
+
+    List<Custominfo> queryHistory(Map<String, Object> map);
+
+    int queryHistoryTotal(Map<String, Object> map);
+
+    List<Custominfo> queryMonth(Map<String, Object> map);
+
+    int queryMonthTotal(Map<String, Object> map);
 
 }

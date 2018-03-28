@@ -99,6 +99,9 @@
             <if test="departmentid != null">
                 and e.departmentId = #{departmentid}
             </if>
+            <if test="startdate != null">
+                and startDate LIKE CONCAT(#{startdate}, '%')
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
@@ -128,11 +131,123 @@
             <if test="departmentid != null">
                 and e.departmentId = #{departmentid}
             </if>
+            <if test="startdate != null">
+                and startDate LIKE CONCAT(#{startdate}, '%')
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
         </where>
     </select>
+
+    <select id="queryHistory" resultType="com.crm.custom.domain.Custominfo">
+        SELECT i.id as id,i.customId as customId,c.`name` as name,i.followManId as followManId,e.realname AS followman,i.statu as statu,
+        i.startDate as startDate,i.lastFollowDate as lastFollowDate,i.planDate as planDate,i.mark as mark
+        FROM custominfo i
+        LEFT JOIN custom c on i.customId=c.id
+        LEFT JOIN employee e on i.followManId=e.id
+        <where>
+            <if test="followmanid != null">
+                and followManId = #{followmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="startdate != null">
+                and startDate not LIKE CONCAT(#{startdate}, '%')
+            </if>
+            <if test="plandate != null">
+                and planDate LIKE CONCAT(#{plandate}, '%')
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryHistoryTotal" resultType="int">
+        select count(DISTINCT i.id)
+        FROM custominfo i
+        LEFT JOIN custom c on i.customId=c.id
+        LEFT JOIN employee e on i.followManId=e.id
+        <where>
+            <if test="followmanid != null">
+                and followManId = #{followmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="startdate != null">
+                and startDate not LIKE CONCAT(#{startdate}, '%')
+            </if>
+            <if test="plandate != null">
+                and planDate LIKE CONCAT(#{plandate}, '%')
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryMonth" resultType="com.crm.custom.domain.Custominfo">
+        SELECT i.id as id,i.customId as customId,c.`name` as name,i.followManId as followManId,e.realname AS followman,i.statu as statu,
+        i.startDate as startDate,i.lastFollowDate as lastFollowDate,i.planDate as planDate,i.mark as mark
+        FROM custominfo i
+        LEFT JOIN custom c on i.customId=c.id
+        LEFT JOIN employee e on i.followManId=e.id
+        <where>
+            <if test="followmanid != null">
+                and followManId = #{followmanid}
+            </if>
+            <if test="startdate != null">
+                and DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryMonthTotal" resultType="int">
+        select count(DISTINCT i.id)
+        FROM custominfo i
+        LEFT JOIN custom c on i.customId=c.id
+        LEFT JOIN employee e on i.followManId=e.id
+        <where>
+            <if test="followmanid != null">
+                and followManId = #{followmanid}
+            </if>
+            <if test="startdate != null">
+                and DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
 
     <update id="update" parameterType="com.crm.custom.domain.Custominfo">
         update custominfo

@@ -8,13 +8,17 @@ import com.crm.custom.domain.Custominfo;
 import com.crm.custom.service.CustomService;
 import com.crm.custom.service.CustominfoService;
 import com.crm.user.domain.Employee;
+import com.crm.user.service.EmployeeService;
+import com.sun.corba.se.impl.presentation.rmi.DynamicMethodMarshallerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.logging.SimpleFormatter;
 
 /**
  * @author tianjianqin
@@ -24,6 +28,8 @@ import java.util.*;
 @RequestMapping("custominfo")
 public class CustominfoController {
 
+    @Autowired
+    private EmployeeService employeeService;
     @Autowired
     private CustomService customService;
     @Autowired
@@ -103,5 +109,117 @@ public class CustominfoController {
             msg = "没有可分配的客户";
         }
         return Result.ok().put("msg",msg);
+    }
+
+    /**
+     * 获得统计数据
+     */
+    @RequestMapping("/getTotal")
+    public Result getTotal(HttpSession session){
+        Employee employee = (Employee)session.getAttribute("employee");
+        int newTodayDate = 0;
+        int newHistoryData = 0;
+        int newAppointData =0;
+        int newMonthData = 0;
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("departmentid",employee.getDepartmentid());
+        List<Employee> employeeList = employeeService.queryList(map1);
+        for (Employee e:employeeList){
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("followmanid",e.getId());
+            //本月统计
+            int monthData = custominfoService.queryMonthTotal(params);
+            newMonthData=newMonthData+monthData;
+
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String startdate = sdf.format(date);
+            params.put("startdate",startdate);
+            //今日统计
+            int todayData = custominfoService.queryTotal(params);
+            newTodayDate=newTodayDate+todayData;
+            //历史遗留
+            int historyData = custominfoService.queryHistoryTotal(params);
+            newHistoryData=newHistoryData+historyData;
+            //诺在今日
+            Map<String, Object> query = new HashMap<String, Object>();
+            query.put("followmanid",employee.getId());
+            query.put("plandate",startdate);
+            int appointData = custominfoService.queryHistoryTotal(query);
+            newAppointData=newAppointData+appointData;
+        }
+        return Result.ok().put("todayData",newTodayDate).put("historyData",newHistoryData).put("appointData",newAppointData).put("monthData",newMonthData);
+    }
+
+    /**
+     * 获得统计数据到饼状图
+     */
+    @RequestMapping("/getPieData")
+    public Object getPieData(HttpSession session){
+        Employee employee = (Employee)session.getAttribute("employee");
+        int newTodayDate = 0;
+        int newHistoryData = 0;
+        int newAppointData =0;
+        int newMonthData = 0;
+        Map<String, Object> map1 = new HashMap<String, Object>();
+        map1.put("departmentid",employee.getDepartmentid());
+        List<Employee> employeeList = employeeService.queryList(map1);
+        for (Employee e:employeeList){
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("followmanid",e.getId());
+            //本月统计
+            int monthData = custominfoService.queryMonthTotal(params);
+            newMonthData=newMonthData+monthData;
+
+            Date date = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String startdate = sdf.format(date);
+            params.put("startdate",startdate);
+            //今日统计
+            int todayData = custominfoService.queryTotal(params);
+            newTodayDate=newTodayDate+todayData;
+            //历史遗留
+            int historyData = custominfoService.queryHistoryTotal(params);
+            newHistoryData=newHistoryData+historyData;
+            //诺在今日
+            Map<String, Object> query = new HashMap<String, Object>();
+            query.put("followmanid",employee.getId());
+            query.put("plandate",startdate);
+            int appointData = custominfoService.queryHistoryTotal(query);
+            newAppointData=newAppointData+appointData;
+        }
+        Map<String, Object> returnMap = new HashMap<String, Object>();
+        List<String> legendData = new ArrayList<String>();
+        legendData.add("今日数据");
+        legendData.add("历史遗留");
+        legendData.add("诺在今日");
+        legendData.add("本月统计");
+        returnMap.put("legendData", legendData);
+        // seriesData list 中存放的map数据
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<Map<String, Object>> seriesData = new ArrayList<Map<String, Object>>();
+        // 第一组数据
+        map.put("name", "今日数据");
+        map.put("value", newTodayDate);
+        seriesData.add(map);
+        // 第2组数据
+        map = new HashMap<String, Object>();
+        map.put("name", "历史遗留");
+        map.put("value", newHistoryData);
+        seriesData.add(map);
+        // 第3组数据
+        map = new HashMap<String, Object>();
+        map.put("name", "诺在今日");
+        map.put("value", newAppointData);
+        seriesData.add(map);
+        // 第4组数据
+        map = new HashMap<String, Object>();
+        map.put("name", "本月统计");
+        map.put("value", newMonthData);
+        seriesData.add(map);
+
+        // 讲seriesData数据放入map
+        returnMap.put("seriesData", seriesData);
+        return returnMap;
     }
 }

@@ -20,4 +20,13 @@ public interface CustominfoService {
 
     void update(Custominfo custominfo);
 
+
+    List<Custominfo> queryHistory(Map<String, Object> map);
+
+    int queryHistoryTotal(Map<String, Object> map);
+
+
+    List<Custominfo> queryMonth(Map<String, Object> map);
+
+    int queryMonthTotal(Map<String, Object> map);
 }

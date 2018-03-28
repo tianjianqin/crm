@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,6 +46,27 @@ public class CustominfoServiceImpl implements CustominfoService {
             customMapper.update(custom);
         }
         custominfoMapper.update(custominfo);
+    }
+
+    @Override
+    public List<Custominfo> queryHistory(Map<String, Object> map) {
+        return custominfoMapper.queryHistory(map);
+    }
+
+    @Override
+    public int queryHistoryTotal(Map<String, Object> map) {
+        return custominfoMapper.queryHistoryTotal(map);
+    }
+
+    @Override
+    public List<Custominfo> queryMonth(Map<String, Object> map) {
+
+        return custominfoMapper.queryMonth(map);
+    }
+
+    @Override
+    public int queryMonthTotal(Map<String, Object> map) {
+        return custominfoMapper.queryMonthTotal(map);
     }
 
     @Override

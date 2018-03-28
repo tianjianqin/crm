@@ -15,14 +15,17 @@ layui.use(['form','element','layer','jquery'],function(){
     })
 
 
-    //用户数量
-    $.get("/user/count",function(data){
-        $(".userAll span").text(data.count);
+    //统计
+    $.get("/custominfo/getTotal",function(data){
+        $(".todayData span").text(data.todayData);
+        $(".historyData span").text(data.historyData);
+        $(".appointData span").text(data.appointData);
+        $(".monthData span").text(data.monthData);
     })
 
     // 基于准备好的dom，初始化echarts实例
     var myChartPie = echarts.init(document.getElementById('pieTable'));
-    $.get("getPieData",{},function(pieData){
+    $.get("/custominfo/getPieData",function(pieData){
         // 指定图表的配置项和数据
         var option = {
             title : {
