@@ -159,6 +159,9 @@
             <if test="plandate != null">
                 and planDate LIKE CONCAT(#{plandate}, '%')
             </if>
+            <if test="statu != null">
+                and statu !=#{statu}
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
@@ -194,6 +197,9 @@
             <if test="plandate != null">
                 and planDate LIKE CONCAT(#{plandate}, '%')
             </if>
+            <if test="statu != null">
+                and statu !=#{statu}
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
@@ -207,11 +213,12 @@
         LEFT JOIN custom c on i.customId=c.id
         LEFT JOIN employee e on i.followManId=e.id
         <where>
+            DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
             <if test="followmanid != null">
                 and followManId = #{followmanid}
             </if>
-            <if test="startdate != null">
-                and DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
             </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
@@ -236,11 +243,12 @@
         LEFT JOIN custom c on i.customId=c.id
         LEFT JOIN employee e on i.followManId=e.id
         <where>
+            DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
             <if test="followmanid != null">
                 and followManId = #{followmanid}
             </if>
-            <if test="startdate != null">
-                and DATE_FORMAT( startDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
             </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')

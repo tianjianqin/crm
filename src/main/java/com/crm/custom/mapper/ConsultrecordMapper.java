@@ -6,6 +6,7 @@ import com.crm.custom.domain.ConsultrecordExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ConsultrecordMapper extends BaseRepository<Consultrecord>{
     long countByExample(ConsultrecordExample example);
@@ -29,4 +30,12 @@ public interface ConsultrecordMapper extends BaseRepository<Consultrecord>{
     int updateByPrimaryKeySelective(Consultrecord record);
 
     int updateByPrimaryKey(Consultrecord record);
+
+    List<Consultrecord> queryHistory(Map<String, Object> map);
+
+    int queryHistoryTotal(Map<String, Object> map);
+
+    List<Consultrecord> queryMonth(Map<String, Object> map);
+
+    int queryMonthTotal(Map<String, Object> map);
 }

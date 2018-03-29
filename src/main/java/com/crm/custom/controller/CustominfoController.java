@@ -53,6 +53,12 @@ public class CustominfoController {
         return data;
     }
 
+    /**
+     * 部门主管查看部门员工开发信息
+     * @param params
+     * @param session
+     * @return
+     */
     @RequestMapping("/allList")
     public Result allList(@RequestParam Map<String, Object> params,HttpSession session) {
         Employee employee = (Employee) session.getAttribute("employee");
@@ -60,6 +66,105 @@ public class CustominfoController {
         query.put("departmentid",employee.getDepartmentid());
         List<Custominfo> custominfoList = custominfoService.queryList(query);
         int total = custominfoService.queryTotal(query);
+        Result data = Result.ok().put("data", custominfoList).put("count",total);
+        return data;
+    }
+
+    /**
+     * 查询今日数据信息
+     * @param params
+     * @param session
+     * @return
+     */
+    @RequestMapping("/todayList")
+    public Result todayList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startdate = sdf.format(new Date());
+        query.put("startdate",startdate);
+        if(employee.getJobinfoid()==8){
+            query.put("followmanid",employee.getId());
+
+        }else{
+            query.put("departmentid",employee.getDepartmentid());
+        }
+        List<Custominfo> custominfoList = custominfoService.queryList(query);
+        int total = custominfoService.queryTotal(query);
+        Result data = Result.ok().put("data", custominfoList).put("count",total);
+        return data;
+    }
+
+    /**
+     * 查询历史数据信息
+     * @param params
+     * @param session
+     * @return
+     */
+    @RequestMapping("/historyList")
+    public Result historyList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startdate = sdf.format(new Date());
+        query.put("startdate",startdate);
+        query.put("statu","4");
+        if(employee.getJobinfoid()==8){
+            query.put("followmanid",employee.getId());
+
+        }else{
+            query.put("departmentid",employee.getDepartmentid());
+        }
+        List<Custominfo> custominfoList = custominfoService.queryHistory(query);
+        int total = custominfoService.queryHistoryTotal(query);
+        Result data = Result.ok().put("data", custominfoList).put("count",total);
+        return data;
+    }
+
+    /**
+     * 查询预约在今日的数据信息
+     * @param params
+     * @param session
+     * @return
+     */
+    @RequestMapping("/appointList")
+    public Result appointList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String startdate = sdf.format(new Date());
+        query.put("plandate",startdate);
+        if(employee.getJobinfoid()==8){
+            query.put("followmanid",employee.getId());
+
+        }else{
+            query.put("departmentid",employee.getDepartmentid());
+        }
+        List<Custominfo> custominfoList = custominfoService.queryHistory(query);
+        int total = custominfoService.queryHistoryTotal(query);
+        Result data = Result.ok().put("data", custominfoList).put("count",total);
+        return data;
+    }
+
+
+    /**
+     * 查询本月的数据信息
+     * @param params
+     * @param session
+     * @return
+     */
+    @RequestMapping("/monthList")
+    public Result monthList(@RequestParam Map<String, Object> params,HttpSession session) {
+        Employee employee = (Employee) session.getAttribute("employee");
+        Query query = new Query(params);
+        if(employee.getJobinfoid()==8){
+            query.put("followmanid",employee.getId());
+
+        }else{
+            query.put("departmentid",employee.getDepartmentid());
+        }
+        List<Custominfo> custominfoList = custominfoService.queryMonth(query);
+        int total = custominfoService.queryMonthTotal(query);
         Result data = Result.ok().put("data", custominfoList).put("count",total);
         return data;
     }
@@ -122,28 +227,32 @@ public class CustominfoController {
         int newAppointData =0;
         int newMonthData = 0;
         Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("departmentid",employee.getDepartmentid());
+        if(employee.getJobinfoid()==8){
+            map1.put("id",employee.getId());
+        }else{
+            map1.put("departmentid",employee.getDepartmentid());
+        }
         List<Employee> employeeList = employeeService.queryList(map1);
         for (Employee e:employeeList){
             Map<String, Object> params = new HashMap<String, Object>();
             params.put("followmanid",e.getId());
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String startdate = sdf.format(new Date());
+            params.put("startdate",startdate);
             //本月统计
             int monthData = custominfoService.queryMonthTotal(params);
             newMonthData=newMonthData+monthData;
-
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String startdate = sdf.format(date);
-            params.put("startdate",startdate);
             //今日统计
             int todayData = custominfoService.queryTotal(params);
             newTodayDate=newTodayDate+todayData;
             //历史遗留
+            params.put("statu","4");
             int historyData = custominfoService.queryHistoryTotal(params);
             newHistoryData=newHistoryData+historyData;
             //诺在今日
             Map<String, Object> query = new HashMap<String, Object>();
-            query.put("followmanid",employee.getId());
+            query.put("followmanid",e.getId());
             query.put("plandate",startdate);
             int appointData = custominfoService.queryHistoryTotal(query);
             newAppointData=newAppointData+appointData;
@@ -156,38 +265,7 @@ public class CustominfoController {
      */
     @RequestMapping("/getPieData")
     public Object getPieData(HttpSession session){
-        Employee employee = (Employee)session.getAttribute("employee");
-        int newTodayDate = 0;
-        int newHistoryData = 0;
-        int newAppointData =0;
-        int newMonthData = 0;
-        Map<String, Object> map1 = new HashMap<String, Object>();
-        map1.put("departmentid",employee.getDepartmentid());
-        List<Employee> employeeList = employeeService.queryList(map1);
-        for (Employee e:employeeList){
-            Map<String, Object> params = new HashMap<String, Object>();
-            params.put("followmanid",e.getId());
-            //本月统计
-            int monthData = custominfoService.queryMonthTotal(params);
-            newMonthData=newMonthData+monthData;
-
-            Date date = new Date();
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            String startdate = sdf.format(date);
-            params.put("startdate",startdate);
-            //今日统计
-            int todayData = custominfoService.queryTotal(params);
-            newTodayDate=newTodayDate+todayData;
-            //历史遗留
-            int historyData = custominfoService.queryHistoryTotal(params);
-            newHistoryData=newHistoryData+historyData;
-            //诺在今日
-            Map<String, Object> query = new HashMap<String, Object>();
-            query.put("followmanid",employee.getId());
-            query.put("plandate",startdate);
-            int appointData = custominfoService.queryHistoryTotal(query);
-            newAppointData=newAppointData+appointData;
-        }
+        Result result = getTotal(session);
         Map<String, Object> returnMap = new HashMap<String, Object>();
         List<String> legendData = new ArrayList<String>();
         legendData.add("今日数据");
@@ -200,22 +278,22 @@ public class CustominfoController {
         List<Map<String, Object>> seriesData = new ArrayList<Map<String, Object>>();
         // 第一组数据
         map.put("name", "今日数据");
-        map.put("value", newTodayDate);
+        map.put("value", result.get("todayData"));
         seriesData.add(map);
         // 第2组数据
         map = new HashMap<String, Object>();
         map.put("name", "历史遗留");
-        map.put("value", newHistoryData);
+        map.put("value", result.get("historyData"));
         seriesData.add(map);
         // 第3组数据
         map = new HashMap<String, Object>();
         map.put("name", "诺在今日");
-        map.put("value", newAppointData);
+        map.put("value", result.get("appointData"));
         seriesData.add(map);
         // 第4组数据
         map = new HashMap<String, Object>();
         map.put("name", "本月统计");
-        map.put("value", newMonthData);
+        map.put("value", result.get("monthData"));
         seriesData.add(map);
 
         // 讲seriesData数据放入map

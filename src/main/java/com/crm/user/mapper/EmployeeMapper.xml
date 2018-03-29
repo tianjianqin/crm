@@ -101,6 +101,9 @@
         LEFT JOIN department d on e.departmentId=d.id
         LEFT JOIN jobinfo j on e.jobInfoId=j.id
         <where>
+            <if test="id != null">
+                and e.id = #{id}
+            </if>
             <if test="jobinfoid != null">
                 and `jobInfoId` = #{jobinfoid}
             </if>

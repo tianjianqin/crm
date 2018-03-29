@@ -20,4 +20,12 @@ public interface ConsultrecordService {
 
     void update(Consultrecord consultrecord);
 
+    List<Consultrecord> queryHistory(Map<String, Object> map);
+
+    int queryHistoryTotal(Map<String, Object> map);
+
+    List<Consultrecord> queryMonth(Map<String, Object> map);
+
+    int queryMonthTotal(Map<String, Object> map);
+
 }

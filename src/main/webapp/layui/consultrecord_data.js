@@ -15,14 +15,16 @@ layui.use(['form','element','layer','jquery'],function(){
     })
 
 
-    //用户数量
-    $.get("/user/count",function(data){
-        $(".userAll span").text(data.count);
+    //统计
+    $.get("/consultrecord/getTotal",function(data){
+        $(".todayData span").text(data.todayData);
+        $(".historyData span").text(data.historyData);
+        $(".monthData span").text(data.monthData);
     })
 
     // 基于准备好的dom，初始化echarts实例
     var myChartPie = echarts.init(document.getElementById('pieTable'));
-    $.get("getPieData",{},function(pieData){
+    $.get("/consultrecord/getPieData",{},function(pieData){
         // 指定图表的配置项和数据
         var option = {
             title : {
@@ -37,14 +39,13 @@ layui.use(['form','element','layer','jquery'],function(){
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                //data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
                 data:pieData.legendData
             },
             series : [
                 {
                     name: '数据统计',
                     type: 'pie',
-                    radius : '55%',
+                    radius : '65%',
                     center: ['50%', '60%'],
                     data:pieData.seriesData,
                     itemStyle: {

@@ -94,6 +94,12 @@
             <if test="consultmanid != null">
                 and consultManId = #{consultmanid}
             </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="consultdate != null">
+                and consultDate LIKE CONCAT(#{consultdate}, '%')
+            </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')
             </if>
@@ -119,6 +125,122 @@
         <where>
             <if test="consultmanid != null">
                 and consultManId = #{consultmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="consultdate != null">
+                and consultDate LIKE CONCAT(#{consultdate}, '%')
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryHistory" resultType="com.crm.custom.domain.Consultrecord">
+        SELECT r.id AS id,r.customId AS customId,c.`name` AS NAME,r.consultManId AS consultManId,
+        e.realname AS consultman,r.consultstatu AS consultstatu,r.consultDate AS consultDate,r.result AS result
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="consultdate != null">
+                and consultDate not LIKE CONCAT(#{consultdate}, '%')
+            </if>
+            <if test="consultstatu != null">
+                and consultStatu != #{consultstatu}
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryHistoryTotal" resultType="int">
+        select count(DISTINCT r.id)
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="consultdate != null">
+                and consultDate not LIKE CONCAT(#{consultdate}, '%')
+            </if>
+            <if test="consultstatu != null">
+                and consultStatu != #{consultstatu}
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="queryMonth" resultType="com.crm.custom.domain.Consultrecord">
+        SELECT r.id AS id,r.customId AS customId,c.`name` AS NAME,r.consultManId AS consultManId,
+        e.realname AS consultman,r.consultstatu AS consultstatu,r.consultDate AS consultDate,r.result AS result
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            DATE_FORMAT( consultDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
+            </if>
+            <if test="name != null and name.trim() != ''">
+                and name like CONCAT('%', #{name}, '%')
+            </if>
+        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+            <otherwise>
+                order by id desc
+            </otherwise>
+        </choose>
+        <if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>
+    </select>
+
+    <select id="queryMonthTotal" resultType="int">
+        select count(DISTINCT r.id)
+        FROM consultrecord r
+        LEFT JOIN custom c ON r.customId=c.id
+        LEFT JOIN employee e ON r.consultManId=e.id
+        <where>
+            DATE_FORMAT( consultDate, '%Y%m' ) = DATE_FORMAT( CURDATE( ) , '%Y%m' )
+            <if test="consultmanid != null">
+                and consultManId = #{consultmanid}
+            </if>
+            <if test="departmentid != null">
+                and e.departmentId = #{departmentid}
             </if>
             <if test="name != null and name.trim() != ''">
                 and name like CONCAT('%', #{name}, '%')

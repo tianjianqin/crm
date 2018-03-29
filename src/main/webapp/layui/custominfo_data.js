@@ -30,7 +30,6 @@ layui.use(['form','element','layer','jquery'],function(){
         var option = {
             title : {
                 text: '数据统计饼状图',
-//                subtext: '纯属虚构',
                 x:'center'
             },
             tooltip : {
@@ -40,14 +39,13 @@ layui.use(['form','element','layer','jquery'],function(){
             legend: {
                 orient: 'vertical',
                 left: 'left',
-                //data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
                 data:pieData.legendData
             },
             series : [
                 {
                     name: '数据统计',
                     type: 'pie',
-                    radius : '55%',
+                    radius : '65%',
                     center: ['50%', '60%'],
                     data:pieData.seriesData,
                     itemStyle: {

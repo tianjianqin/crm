@@ -50,4 +50,24 @@ public class ConsultrecordServiceImpl implements ConsultrecordService{
         }
         consultrecordMapper.update(consultrecord);
     }
+
+    @Override
+    public List<Consultrecord> queryHistory(Map<String, Object> map) {
+        return consultrecordMapper.queryHistory(map);
+    }
+
+    @Override
+    public int queryHistoryTotal(Map<String, Object> map) {
+        return consultrecordMapper.queryHistoryTotal(map);
+    }
+
+    @Override
+    public List<Consultrecord> queryMonth(Map<String, Object> map) {
+        return consultrecordMapper.queryMonth(map);
+    }
+
+    @Override
+    public int queryMonthTotal(Map<String, Object> map) {
+        return consultrecordMapper.queryMonthTotal(map);
+    }
 }
