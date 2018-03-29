@@ -23,7 +23,7 @@
     <div id="nowTime">亲爱的${sessionScope.employee.realname},<span id="welcome"></span></div>
 </blockquote>
 <div class="layui-row layui-col-space10 panel_box">
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md3 layui-col-lg3">
         <a href="javascript:;" data-url="https://github.com/tianjianqin/crm" target="_blank">
             <div class="panel_icon layui-bg-green">
                 <i class="layui-anim seraph icon-good"></i>
@@ -34,7 +34,7 @@
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md3 layui-col-lg3">
         <a href="javascript:;" data-url="https://github.com/tianjianqin/crm" target="_blank">
             <div class="panel_icon layui-bg-black">
                 <i class="layui-anim seraph icon-github"></i>
@@ -45,7 +45,7 @@
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md3 layui-col-lg3">
         <a href="javascript:;">
             <div class="panel_icon layui-bg-orange">
                 <i class="layui-anim seraph icon-icon10" data-icon="icon-icon10"></i>
@@ -57,7 +57,7 @@
             </div>
         </a>
     </div>
-    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg3">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md3 layui-col-lg3">
         <a href="javascript:;">
             <div class="panel_icon layui-bg-blue">
                 <i class="layui-anim seraph icon-clock"></i>

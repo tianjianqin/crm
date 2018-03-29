@@ -45,8 +45,8 @@ layui.use(['form','element','layer','jquery'],function(){
                 {
                     name: '数据统计',
                     type: 'pie',
-                    radius : '65%',
-                    center: ['50%', '60%'],
+                    radius : '60%',
+                    center: ['50%', '50%'],
                     data:pieData.seriesData,
                     itemStyle: {
                         emphasis: {
