@@ -61,7 +61,14 @@ public class JobinfoController {
      * 修改职位
      */
     @RequestMapping("/update")
-    public Result update(@RequestBody Jobinfo jobinfo){
+    public Result update(Integer id,String job,Integer departmentid,Integer[] rightIdList){
+        List<Integer> rightIdList1 = new ArrayList<Integer>();
+        Collections.addAll(rightIdList1,rightIdList);
+        Jobinfo jobinfo = new Jobinfo();
+        jobinfo.setId(id);
+        jobinfo.setJob(job);
+        jobinfo.setDepartmentid(departmentid);
+        jobinfo.setRightIdList(rightIdList1);
         jobinfoService.update(jobinfo);
 
         return Result.ok();

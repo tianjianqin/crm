@@ -99,6 +99,7 @@ layui.use(['form','layer','table','laytpl'],function(){
 
             //勾选角色所拥有的菜单
             var rightIds = data;
+            ztree = $.fn.zTree.getZTreeObj("menuTree");
             for(var i=0; i<rightIds.length; i++) {
                 var node = ztree.getNodeByParam("rid", rightIds[i]);
                 ztree.checkNode(node, true, false);
