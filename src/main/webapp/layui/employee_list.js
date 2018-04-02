@@ -56,7 +56,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             title : "添加用户",
             type : 2,
             content : "employee_add.jsp",
-        })
+        });
         layui.layer.full(index);
         //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
         $(window).on("resize",function(){
@@ -79,8 +79,7 @@ layui.use(['form','layer','table','laytpl'],function(){
                     body.find(".nickname").val(edit.nickname);  //昵称
                     body.find(".realname").val(edit.realname);  //真实姓名
                     body.find(".workstatu input[value="+edit.workstatu+"]").prop("checked","checked");  //状态
-                    body.find(".departmentid").val(edit.departmentid);    //部门
-                    // body.find(".departmentid option[value="+edit.departmentid+"]").prop("selected",selected);
+                    body.find(".departmentid").append("<option value='"+edit.departmentid+"'>"+edit.dname+"</option>");//有bug
                     body.find(".jobinfoid").append("<option value='"+edit.jobinfoid+"'>"+edit.job+"</option>");
                     body.find(".phoneno").val(edit.phoneno);    //手机号
                     body.find(".officetel").val(edit.officetel);    //办公电话
@@ -121,4 +120,5 @@ layui.use(['form','layer','table','laytpl'],function(){
             });
         }
     });
+
 })

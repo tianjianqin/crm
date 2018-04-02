@@ -87,7 +87,9 @@ layui.use(['form','layer','table','laytpl'],function(){
         //加载菜单树
         $.get("/jobright/list", function(data){
             ztree = $.fn.zTree.init($("#menuTree"), setting, data.rightsList);
-            getRight($(".id").val())
+            if($(".id").val()!="" && $(".id").val()!=undefined){
+                getRight($(".id").val())
+            }
             //展开所有节点
             ztree.expandAll(true);
 
@@ -148,7 +150,7 @@ layui.use(['form','layer','table','laytpl'],function(){
             title : "添加职位权限",
             type : 2,
             content : "jobright_add.html",
-        })
+        });
         layui.layer.full(index);
         //改变窗口大小时，重置弹窗的宽高，防止超出可视区域（如F12调出debug的操作）
         $(window).on("resize",function(){
