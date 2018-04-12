@@ -105,55 +105,6 @@ layui.use(['bodyTab','form','element','layer','jquery'],function(){
         })
     })
 
-	//修改密码
-    $(".updatePassword").click(function(){
-        layer.open({
-            type: 1,
-            skin: 'layui-layer-molv',
-            title: "修改密码",
-            area: ['400px', '300px'],
-            shadeClose: false,
-            content: jQuery("#passwordLayer"),
-            btn: ['修改','取消'],
-            btn1: function (index) {
-            	var password=$("#oldPwd").val();
-            	var newPassword=$("#newPwd").val();
-            	var confirmPassword=$("#confirmPwd").val();
-            	if(password == ''){
-                    layer.msg("此项不能为空");
-                    $("#oldPwd").focus();
-                }else if(newPassword!=confirmPassword){
-                    layer.msg("两次密码输入不一致，请重新输入");
-                    $("#confirmPwd").focus();
-                }else if(newPassword==''){
-                    layer.msg("此项不能为空");
-                    $("#newPwd").focus();
-                }else if(confirmPassword==''){
-                    layer.msg("此项不能为空");
-                    $("#confirmPwd").focus();
-                }
-                var data = "password="+password+"&newPassword="+newPassword;
-                $.ajax({
-                    type: "POST",
-                    url: "user/password",
-                    data: data,
-                    dataType: "json",
-                    success: function(result){
-                        if(result == "1"){
-                            layer.close(index);
-                            layer.alert('修改成功', function(index){
-                                location.reload();
-                            });
-                        }else{
-                            layer.msg("旧密码输入错误，请重新输入");
-                            $("#oldPwd").focus()
-                        }
-                    }
-                });
-            }
-        });
-	})
-
 
 	//刷新后还原打开的窗口
     if(cacheStr == "true") {
