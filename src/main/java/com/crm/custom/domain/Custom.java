@@ -1,5 +1,6 @@
 package com.crm.custom.domain;
 
+import com.crm.base.utils.excel.annotation.ExcelField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,6 +27,12 @@ public class Custom {
 
     private String invitename;
 
+    @ExcelField(
+            title = "ID",
+            type = 1,
+            align = 2,
+            sort = 1
+    )
     public Integer getId() {
         return id;
     }
@@ -34,6 +41,11 @@ public class Custom {
         this.id = id;
     }
 
+    @ExcelField(
+            title = "客户姓名",
+            align = 2,
+            sort = 30
+    )
     public String getName() {
         return name;
     }
@@ -42,6 +54,11 @@ public class Custom {
         this.name = name;
     }
 
+    @ExcelField(
+            title = "教育水平",
+            align = 2,
+            sort = 40
+    )
     public String getEducation() {
         return education;
     }
@@ -50,6 +67,11 @@ public class Custom {
         this.education = education;
     }
 
+    @ExcelField(
+            title = "手机号",
+            align = 2,
+            sort = 70
+    )
     public String getPhoneno() {
         return phoneno;
     }
@@ -58,6 +80,11 @@ public class Custom {
         this.phoneno = phoneno;
     }
 
+    @ExcelField(
+            title = "QQ",
+            align = 2,
+            sort = 70
+    )
     public String getQq() {
         return qq;
     }
@@ -66,6 +93,11 @@ public class Custom {
         this.qq = qq;
     }
 
+    @ExcelField(
+            title = "邮箱",
+            align = 1,
+            sort = 50
+    )
     public String getEmail() {
         return email;
     }
@@ -74,6 +106,12 @@ public class Custom {
         this.email = email;
     }
 
+    @ExcelField(
+            title = "客户状态",
+            align = 2,
+            sort = 80,
+            dictType = "customStatu"
+    )
     public String getCustomstatu() {
         return customstatu;
     }
@@ -90,6 +128,11 @@ public class Custom {
         this.createdate = createdate;
     }
 
+    @ExcelField(
+            title = "邀请人姓名",
+            align = 2,
+            sort = 30
+    )
     public String getInvitename() {
         return invitename;
     }

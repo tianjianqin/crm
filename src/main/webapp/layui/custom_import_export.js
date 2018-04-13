@@ -5,6 +5,7 @@ layui.use(['form','layer','upload','table','laytpl'],function(){
         upload = layui.upload,
     laytpl = layui.laytpl,
         table = layui.table;
+    var currPage;
 
     //时间戳的处理
     layui.laytpl.toDateString = function(d, format){
@@ -77,7 +78,10 @@ layui.use(['form','layer','upload','table','laytpl'],function(){
             }},
             {field: 'createdate', title: '创建日期',align:'center',minWidth:100,templet: '<div>{{layui.laytpl.toDateString(d.createdate)}}</div>'},
             {field: 'invitename', title: '邀请人姓名',  align:'center',minWidth:100},
-        ]]
+        ]],
+        done: function(res, curr){
+            currPage = curr;
+        }
     });
 
 
@@ -116,4 +120,17 @@ layui.use(['form','layer','upload','table','laytpl'],function(){
         }
     });
 
+
+    $("#export").click(function(data){
+        top.layer.confirm('确认要导出Excel吗?', {icon: 3, title:'系统提示'}, function(index){
+            $.post("../export", {
+                page : currPage,
+                limit : 10
+            }, function (data) {
+                layer.alert("导出成功！")
+            })
+            top.layer.close(index);
+        });
+        return false;
+    });
 })
