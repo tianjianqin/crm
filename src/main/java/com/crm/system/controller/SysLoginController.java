@@ -67,7 +67,7 @@ public class SysLoginController {
         Employee employee = sysUserService.login(username, password);
         Object code = session.getAttribute("captcha");
 
-        if(employee != null && employee.getWorkstatu().equals("1") || code.equals(captcha)){
+        if(employee != null && employee.getWorkstatu().equals("1") && code.equals(captcha)){
             session.setAttribute("employee", employee);
             List<Rights> rightsList = jobRightService.findRightName(employee.getJobinfoid());
             session.setAttribute("rightsList",rightsList);
